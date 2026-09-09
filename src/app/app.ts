@@ -1,12 +1,30 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.scss',
+  standalone: true,
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.html',
+  styleUrl: './app.scss'
 })
-export class App {
-  protected readonly title = signal('frontend-ep1');
+export class App implements OnInit {
+  authService = inject(AuthService);
+  msalService = inject(MsalService); // Inyectamos el motor de Microsoft
+
+  ngOnInit() {
+    // Esta es la línea mágica que atrapa el "#code=..." de la URL y lo procesa
+    this.msalService.handleRedirectObservable().subscribe();
+  }
+
+  login() {
+    this.authService.login();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 }

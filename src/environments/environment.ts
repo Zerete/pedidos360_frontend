@@ -1,13 +1,13 @@
 export const environment = {
   production: false,
   azure: {
-    clientId: 'AQUI_VA_EL_CLIENT_ID_DE_TU_ANGULAR',
-    tenantId: 'AQUI_VA_EL_TENANT_ID_DE_TU_COMPAÑERO',
-    authority: 'https://login.microsoftonline.com/AQUI_VA_EL_TENANT_ID_DE_TU_COMPAÑERO',
+    clientId: '6731c641-8037-476d-9d2b-76765ca2ecc3',
+    tenantId: '17dd3345-54db-49ce-8172-092f2ccd50fd',
+    authority: 'https://login.microsoftonline.com/17dd3345-54db-49ce-8172-092f2ccd50fd',
     redirectUri: 'http://localhost:4200/',
     api: {
-      clientId: 'AQUI_VA_EL_CLIENT_ID_DEL_BFF',
-      scope: 'api://AQUI_VA_EL_CLIENT_ID_DEL_BFF/access_as_user',
+      clientId: 'fc8de29a-f24d-4173-bfc1-12580819e4c7',
+      scope: 'api://fc8de29a-f24d-4173-bfc1-12580819e4c7/access_as_user',
       url: 'https://TU_API_GATEWAY.execute-api.us-east-1.amazonaws.com/Desarrollo'
     }
   }
