@@ -1,0 +1,38 @@
+<div class="admin-container">
+  <h2>Panel de Administración - Gestión de Pedidos</h2>
+
+  <div class="tabla-card">
+    <table class="tabla-pedidos">
+      <thead>
+        <tr>
+          <th>ID Pedido</th>
+          <th>Cliente</th>
+          <th>Producto</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pedido of pedidos">
+          <td>#{{ pedido.id }}</td>
+          <td>{{ pedido.cliente }}</td>
+          <td>{{ pedido.producto }}</td>
+          <td>${{ pedido.total | number }}</td>
+          <td>
+            <span class="badge" [ngClass]="{
+              'pendiente': pedido.estado === 'Pendiente',
+              'proceso': pedido.estado === 'En Proceso',
+              'completado': pedido.estado === 'Completado'
+            }">
+              {{ pedido.estado }}
+            </span>
+          </td>
+          <td>
+            <button class="btn-accion" (click)="cambiarEstado(pedido)">Avanzar Estado</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

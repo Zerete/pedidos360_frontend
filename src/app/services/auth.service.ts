@@ -9,6 +9,8 @@ import { environment } from '../../environments/environment';
 export class AuthService {
   private msalService = inject(MsalService);
   private msalBroadcastService = inject(MsalBroadcastService);
+  
+  private currentToken: string | null = null; 
 
   constructor() {
     this.msalBroadcastService.inProgress$.subscribe((status) => {
@@ -47,6 +49,10 @@ export class AuthService {
     return this.msalService.instance.getActiveAccount();
   }
 
+  obtenerToken(): string | null {
+    return this.currentToken;
+  }
+
   async obtenerAccessToken(): Promise<void> {
     const account = this.msalService.instance.getActiveAccount();
     if (!account) {
@@ -58,7 +64,11 @@ export class AuthService {
         account,
         scopes: [environment.azure.api.scope],
       });
+      
       const token = result.accessToken;
+      
+      this.currentToken = token; 
+
       const partes = token.split('.');
       if (partes.length !== 3) {
         console.error('El Access Token no tiene formato JWT.');

@@ -3,11 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './services/auth.service';
 import { MsalService } from '@azure/msal-angular';
-
+import { Navbar } from './components/navbar/navbar';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule,Navbar],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
