@@ -1,24 +1,2 @@
 <app-navbar></app-navbar>
-
-<div style="text-align: center; margin-top: 50px; font-family: sans-serif;"></div>
-<div style="text-align: center; margin-top: 50px; font-family: sans-serif;">
-  <h1>Bienvenido a Pedidos360</h1>
-  
-  <!-- Se muestra si NO hay sesión -->
-  <div *ngIf="!authService.isLoggedIn()">
-    <button (click)="login()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
-      Iniciar sesión con Microsoft
-    </button>
-  </div>
-  
-  <!-- Se muestra si SÍ hay sesión -->
-  <div *ngIf="authService.isLoggedIn()">
-    <h2>¡Hola! Has iniciado sesión correctamente.</h2>
-    <p>Abre la consola (F12) para ver tu Access Token y tu Rol.</p>
-    <button (click)="logout()" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
-      Cerrar sesión
-    </button>
-  </div>
-</div>
-
 <router-outlet></router-outlet>
