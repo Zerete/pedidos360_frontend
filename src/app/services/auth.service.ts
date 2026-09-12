@@ -11,6 +11,7 @@ export class AuthService {
   private msalBroadcastService = inject(MsalBroadcastService);
   
   private currentToken: string | null = null; 
+  private currentRole: string | null = null;
 
   constructor() {
     this.msalBroadcastService.inProgress$.subscribe((status) => {
@@ -53,6 +54,10 @@ export class AuthService {
     return this.currentToken;
   }
 
+  getRole(): string | null {
+    return this.currentRole;
+  }
+  
   async obtenerAccessToken(): Promise<void> {
     const account = this.msalService.instance.getActiveAccount();
     if (!account) {
@@ -66,7 +71,6 @@ export class AuthService {
       });
       
       const token = result.accessToken;
-      
       this.currentToken = token; 
 
       const partes = token.split('.');
@@ -75,6 +79,21 @@ export class AuthService {
         return;
       }
       const payload = JSON.parse(atob(partes[1].replace(/-/g, '+').replace(/_/g, '/')));
+
+      setTimeout(() => {
+        if (payload.roles && payload.roles.length > 0) {
+          this.currentRole = payload.roles[0];
+        } else {
+          this.currentRole = 'Cliente';
+        }
+      }, 0);
+      
+      if (payload.roles && payload.roles.length > 0) {
+        this.currentRole = payload.roles[0];
+      } else {
+        this.currentRole = 'Cliente';
+      }
+
       console.log('==============================');
       console.log('ACCESS TOKEN PEDIDOS360');
       console.log('==============================');
