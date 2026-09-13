@@ -82,17 +82,11 @@ export class AuthService {
 
       setTimeout(() => {
         if (payload.roles && payload.roles.length > 0) {
-          this.currentRole = payload.roles[0];
+          this.currentRole = payload.roles.includes('Admin') ? 'Admin' : 'Cliente';
         } else {
           this.currentRole = 'Cliente';
         }
       }, 0);
-      
-      if (payload.roles && payload.roles.length > 0) {
-        this.currentRole = payload.roles[0];
-      } else {
-        this.currentRole = 'Cliente';
-      }
 
       console.log('==============================');
       console.log('ACCESS TOKEN PEDIDOS360');
