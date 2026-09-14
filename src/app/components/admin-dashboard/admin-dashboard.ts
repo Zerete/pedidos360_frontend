@@ -32,9 +32,30 @@ export class AdminDashboard implements OnInit {
       });
   }
 
+  avanzar(pedido: any) {
+   
+    const mapaAcciones: Record<string, string> = {
+      'CREADO': 'accept',
+      'ACEPTADO': 'prepare',
+      'EN_PREPARACION': 'ship',
+      'DESPACHADO': 'deliver'
+    };
+    const accion = mapaAcciones[pedido.estado];
 
-  cambiarEstado(pedido: any) {
-    console.log('Intentando cambiar estado del pedido:', pedido.id);
-    
+    if (!accion) { return; }
+
+    this.http.put(`${environment.azure.api.url}/api/orders/${pedido.id}/${accion}`, {})
+      .subscribe({
+        next: () => this.cargarPedidos(),
+        error: (err) => {
+          if (err.status === 403) {
+            alert('No tienes permiso para esta operación. Se requiere rol Admin.');
+          } else if (err.status === 400) {
+            alert(err.error?.mensaje ?? 'Transición de estado no permitida');
+          } else {
+            console.error('Error inesperado', err);
+          }
+        }
+      });
   }
 }
