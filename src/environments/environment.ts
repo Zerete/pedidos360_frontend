@@ -8,7 +8,7 @@ export const environment = {
     api: {
       clientId: 'fc8de29a-f24d-4173-bfc1-12580819e4c7',
       scope: 'api://fc8de29a-f24d-4173-bfc1-12580819e4c7/access_as_user',
-      url: 'https://xpglku1pj5.execute-api.us-east-1.amazonaws.com'
+      url: 'https://xpglku1pj5.execute-api.us-east-1.amazonaws.com/Desarrollo'
     }
   }
 };

@@ -1,28 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment'; 
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [CommonModule],
-  styleUrl: './admin-dashboard.scss',
   templateUrl: './admin-dashboard.html',
+  styleUrls: ['./admin-dashboard.scss']
 })
-export class AdminDashboard {
-  pedidos = [
-    { id: 101, cliente: 'Cliente Principal (Azure)', producto: 'Laptop Ultra', total: 850000, estado: 'Pendiente' },
-    { id: 102, cliente: 'Administrador System', producto: 'Teclado Mecánico', total: 45000, estado: 'En Proceso' },
-    { id: 103, cliente: 'Juan Pérez', producto: 'Monitor 27"', total: 150000, estado: 'Completado' },
-    { id: 104, cliente: 'María Gómez', producto: 'Mouse Ergonómico', total: 25000, estado: 'Pendiente' }
-  ];
+export class AdminDashboard implements OnInit {
+  private http = inject(HttpClient);
+  
+  pedidos: any[] = []; 
+
+  ngOnInit() {
+    this.cargarPedidos();
+  }
+
+  cargarPedidos() {
+    this.http.get<any[]>(`${environment.azure.api.url}/api/orders`)
+      .subscribe({
+        next: (data) => {
+          this.pedidos = data;
+          console.log('Pedidos cargados desde AWS:', data);
+        },
+        error: (err) => {
+          console.error('Error HTTP. Revisa la pestaña Network en DevTools', err);
+        }
+      });
+  }
+
 
   cambiarEstado(pedido: any) {
-    if (pedido.estado === 'Pendiente') {
-      pedido.estado = 'En Proceso';
-    } else if (pedido.estado === 'En Proceso') {
-      pedido.estado = 'Completado';
-    } else {
-      pedido.estado = 'Pendiente';
-    }
+    console.log('Intentando cambiar estado del pedido:', pedido.id);
+    
   }
 }
